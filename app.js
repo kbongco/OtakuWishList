@@ -16,9 +16,33 @@ const topAnime = (animes) => {
     poster.src = anime.image_url
     poster.classList.add('carousel__photo')
     carousel.appendChild(poster)
-    document.querySelector('.carousel-wrapper').append(carousel)
+    console.log(poster)
+    let button = document.createElement('button')
+    button.classList.add('trigger')
+    button.appendChild(poster)
+    console.log(button)
+    document.querySelector('.carousel-wrapper').append(button)
   })
 }
+
+let modal = document.querySelector('.modal')
+let trigger = document.querySelector('.trigger')
+console.log(trigger)
+let close = document.querySelector('.close-button')
+
+let toggle = () => {
+  modal.classList.toggle('show-modal')
+}
+
+let windowOnClick = (e) => {
+  if (e.target === modal) {
+    toggle
+  }
+}
+
+// // trigger.addEventListener('click', toggleModal);
+// closeButton.addEventListener('click', toggleModal)
+// window.addEventListener('click', windowOnClick)
 
 const getTop = async () => {
   const topFifty = topURL
@@ -32,3 +56,40 @@ const getTop = async () => {
 }
 
 getTop();
+
+const randomAnime = (anime) => {
+  let randomDiv = document.createElement('div')
+  randomDiv.classList.add('randomresults')
+  let randomPoster = document.createElement('img')
+  randomPoster.src = anime.image_url 
+  randomDiv.appendChild(randomPoster)
+  document.querySelector('.randomlygenerated').append(randomDiv)
+}
+
+let animeMin = 1;
+let animeMax = 43016;
+let result = Math.floor(Math.random() * (animeMax - animeMin + 1) + animeMin)
+let malId = result 
+
+randomUrl = `https://api.jikan.moe/v3/anime/${malId}`
+
+
+
+
+
+const randomAnimu = async () => {
+  const randomAnimu = randomUrl;
+  try {
+    const randomResponse = await axios.get(randomUrl)
+    console.log(randomResponse)
+    randomAnime(randomResponse.data)
+
+  } catch (error) {
+    console.error(`Omae wa mo shinderu. The app is dead thanks to ${error}`)
+  }
+}
+
+const randomSelect = document.querySelector('#random')
+random.addEventListener('click', randomAnime)
+
+randomAnimu()
