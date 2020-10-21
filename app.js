@@ -6,6 +6,8 @@ toggleNav.addEventListener('click', function () {
   jsMenu.classList.toggle('active')
 })
 
+
+
 topURL = "https://api.jikan.moe/v3/top/anime/1/airing"
 
 const topAnime = (animes) => {
@@ -16,19 +18,25 @@ const topAnime = (animes) => {
     poster.src = anime.image_url
     poster.classList.add('carousel__photo')
     carousel.appendChild(poster)
-    console.log(poster)
     let button = document.createElement('button')
     button.classList.add('trigger')
+    button.addEventListener('click', () => userAnime(anime))
     button.appendChild(poster)
-    console.log(button)
     document.querySelector('.carousel-wrapper').append(button)
   })
 }
 
-let modal = document.querySelector('.modal')
-let trigger = document.querySelector('.trigger')
-console.log(trigger)
-let close = document.querySelector('.close-button')
+const userAnime = (anime) => {
+  let usersDiv = document.createElement('div')
+  let favePoster = document.createElement('img')
+  favePoster.src = anime.image_url
+  let url = favePoster.src 
+  localStorage.setItem('url', url)
+  favePoster.src = localStorage.getItem('url')
+  usersDiv.appendChild(favePoster)
+  document.querySelector('.userselected').append(usersDiv)
+}
+
 
 let toggle = () => {
   modal.classList.toggle('show-modal')
